@@ -1,7 +1,7 @@
 ---
 title: Double or One Thing
 categories: [Technical Logs, Individual]
-tags: []
+tags: [python]
 ---
 
 > This page is still in WIP. A lot of information is missing or not reviewed.
