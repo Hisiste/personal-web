@@ -2,6 +2,7 @@
 title: Double or One Thing
 categories: [Technical Logs, Individual]
 tags: [python]
+math: true
 ---
 
 > This page is still in WIP. A lot of information is missing or not reviewed.
@@ -13,7 +14,13 @@ Try this problem by yourself first! Check the [Code Jam Page](https://codingcomp
 
 ## Overview
 
-> A HIGH LEVEL SUMMARY THAT EVERY ENGINEER SHOULD UNDERSTAND AND CAN NAVIGATE THROUGH YOUR PROBLEM-SOLVING PROCESS.
+We have a string of uppercase English characters. We can double or not every
+character of the string. If we had the set of all possible results and sort them
+alphabetically, which string would come first?
+
+Our only control over the string is doubling or not every character. Sorting
+alphabetically means comparing letters and choosing the one that appears before
+in the alphabet. We would...
 
 <br>
 <div style="text-align: center;">O &nbsp; &nbsp; O &nbsp; &nbsp; O</div>
@@ -25,10 +32,10 @@ Try this problem by yourself first! Check the [Code Jam Page](https://codingcomp
 
 Let's summarize the problem. Take a string of uppercase English characters. We can highlight any of its letters, possibly all or none of them. Every highlighted letter will be duplicated, every non-highlighted letter will stay as is. We'll give an example with all of its highlighting possibilities.
 
-| RIDE -> RIDE | RI<span style="background-color: var(--mark-text);">D</span>E -> RIDDE | RID<span style="background-color:var(--mark-text);">E</span> -> RIDEE | RI<span style="background-color:var(--mark-text);">DE</span> -> RIDDEE |
-| <span style="background-color:var(--mark-text);">R</span>IDE -> RRIDE | <span style="background-color:var(--mark-text);">R</span>I<span style="background-color:var(--mark-text);">D</span>E -> RRIDDE | <span style="background-color:var(--mark-text);">R</span>ID<span style="background-color:var(--mark-text);">E</span> -> RRIDEE | <span style="background-color:var(--mark-text);">R</span>I<span style="background-color:var(--mark-text);">DE</span> -> RRIDDEE |
-| R<span style="background-color:var(--mark-text);">I</span>DE -> RIIDE | R<span style="background-color:var(--mark-text);">ID</span>E -> RIIDDE | R<span style="background-color:var(--mark-text);">I</span>D<span style="background-color:var(--mark-text);">E</span> -> RIIDEE | R<span style="background-color:var(--mark-text);">IDE</span> -> RIIDDEE |
-| <span style="background-color:var(--mark-text);">RI</span>DE -> RRIIDE | <span style="background-color:var(--mark-text);">RID</span>E -> RRIIDDE | <span style="background-color:var(--mark-text);">RI</span>D<span style="background-color:var(--mark-text);">E</span> -> RRIIDEE | <span style="background-color:var(--mark-text);">RIDE</span> -> RRIIDDEE |
+| RIDE $\rightarrow$ RIDE | RI<span style="background-color: var(--mark-text);">D</span>E $\rightarrow$ RIDDE | RID<span style="background-color:var(--mark-text);">E</span> $\rightarrow$ RIDEE | RI<span style="background-color:var(--mark-text);">DE</span> $\rightarrow$ RIDDEE |
+| <span style="background-color:var(--mark-text);">R</span>IDE $\rightarrow$ RRIDE | <span style="background-color:var(--mark-text);">R</span>I<span style="background-color:var(--mark-text);">D</span>E $\rightarrow$ RRIDDE | <span style="background-color:var(--mark-text);">R</span>ID<span style="background-color:var(--mark-text);">E</span> $\rightarrow$ RRIDEE | <span style="background-color:var(--mark-text);">R</span>I<span style="background-color:var(--mark-text);">DE</span> $\rightarrow$ RRIDDEE |
+| R<span style="background-color:var(--mark-text);">I</span>DE $\rightarrow$ RIIDE | R<span style="background-color:var(--mark-text);">ID</span>E $\rightarrow$ RIIDDE | R<span style="background-color:var(--mark-text);">I</span>D<span style="background-color:var(--mark-text);">E</span> $\rightarrow$ RIIDEE | R<span style="background-color:var(--mark-text);">IDE</span> $\rightarrow$ RIIDDEE |
+| <span style="background-color:var(--mark-text);">RI</span>DE $\rightarrow$ RRIIDE | <span style="background-color:var(--mark-text);">RID</span>E $\rightarrow$ RRIIDDE | <span style="background-color:var(--mark-text);">RI</span>D<span style="background-color:var(--mark-text);">E</span> $\rightarrow$ RRIIDEE | <span style="background-color:var(--mark-text);">RIDE</span> $\rightarrow$ RRIIDDEE |
 
 Now, with all of our results, we must sort alphabetically all of them. We would obtain the following result:
 
@@ -46,7 +53,7 @@ Let's compare two words: *book* and *boat*. Alphabetically, which one comes firs
 1. Compare each letter from left to right. Find the first ones that differ.
 
     | **B** ook - **B** oat | *b* **O** ok - *b* **O** at | *bo* **O** k - *bo* **A** t |
-    | They're the same. (**b**) | They're the same. (**o**) | They differ. (**o** =/= **a**) |
+    | They're the same. (**b**) | They're the same. (**o**) | They differ. (**o** $\neq$ **a**) |
 
 1. The letter that differs decides which word comes first.
 
@@ -57,7 +64,7 @@ Let's compare two words: *book* and *boat*. Alphabetically, which one comes firs
 1. What if one word is a subset of the other? The smallest word will come first, then.
 
     | **C** an - **C** annot | *c* **A** n - *c* **A** nnot | *ca* **N** - *ca* **N** not | *can* - *can* **N** ot |
-    | Same letter. (**c**) | Same letter. (**a**) | Same letter. (**n**) | Differ. (**_** =/= **n**) |
+    | Same letter. (**c**) | Same letter. (**a**) | Same letter. (**n**) | Differ. (**_** $\neq$ **n**) |
 
     | Can < Cannot |
     |:-:|
@@ -85,30 +92,30 @@ We illustrate two examples following the procedure.
 
 #### RIDE
 
-1. **R**I<span style="opacity: .2;">DE</span> -> The *R* comes after the *I*. Hence, we won't highlight the *R*.
-1. <span style="opacity: .2;">R</span>**I**D<span style="opacity: .3;">E</span> -> The *I* comes after the *D*. Therefore, we won't highlight the *I*.
-1. <span style="opacity: .2;">RI</span>**D**E -> The *D* comes before the *E*. Now we will highlight the *D*.
-1. <span style="opacity: .2;">RI</span><span style="background-color:var(--mark-text); opacity: .2;">D</span>**E** -> We won't highlight the *E* because it is the last letter.
+1. **R**I<span style="opacity: .2;">DE</span> $\rightarrow$ The *R* comes after the *I*. Hence, we won't highlight the *R*.
+1. <span style="opacity: .2;">R</span>**I**D<span style="opacity: .3;">E</span> $\rightarrow$ The *I* comes after the *D*. Therefore, we won't highlight the *I*.
+1. <span style="opacity: .2;">RI</span>**D**E $\rightarrow$ The *D* comes before the *E*. Now we will highlight the *D*.
+1. <span style="opacity: .2;">RI</span><span style="background-color:var(--mark-text); opacity: .2;">D</span>**E** $\rightarrow$ We won't highlight the *E* because it is the last letter.
 
 The resulting string is RI<span style="background-color:var(--mark-text); ">D</span>E. Just as we saw in the [context section](#context), this is the desired output.
 
 #### FEEELING
 
-1. **F**E<span style="opacity: .2;">EELING</span> -> *F* > *E*. Therefore, *F* is not highlighted.
-1. <span style="opacity: .2;">F</span>**E**E<span style="opacity: .2;">ELING</span> -> *E* = *E*. We'll keep walking.
-1. <span style="opacity: .2;">F</span>**E**EE<span style="opacity: .2;">LING</span> -> *E* = *E*. Keep on walkiiiing.
-1. <span style="opacity: .2;">F</span>**E**EEL<span style="opacity: .2;">ING</span> -> *E* < *L*. Hence, we'll highlight all *E*'s.
-1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span>**L**I<span style="opacity: .2;">NG</span> -> *L* > *I*. We won't highlight the *L*.
-1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span><span style="opacity: .2;">L</span>**I**N<span style="opacity: .2;">G</span> -> *I* < *N*. The *I* must be highlighted.
-1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span><span style="opacity: .2;">L</span><span style="background-color:var(--mark-text); opacity: .2;">I</span>**N**G -> *N* > *G*. You better not touch the *N*. Don't highlight it!
-1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span><span style="opacity: .2;">L</span><span style="background-color:var(--mark-text); opacity: .2;">I</span><span style="opacity: .2;">N</span>**G** -> *G* > *_*. Last letter must never be highlighted. >:(
+1. **F**E<span style="opacity: .2;">EELING</span> $\rightarrow$ *F* > *E*. Therefore, *F* is not highlighted.
+1. <span style="opacity: .2;">F</span>**E**E<span style="opacity: .2;">ELING</span> $\rightarrow$ *E* = *E*. We'll keep walking.
+1. <span style="opacity: .2;">F</span>**E**EE<span style="opacity: .2;">LING</span> $\rightarrow$ *E* = *E*. Keep on walkiiiing.
+1. <span style="opacity: .2;">F</span>**E**EEL<span style="opacity: .2;">ING</span> $\rightarrow$ *E* < *L*. Hence, we'll highlight all *E*'s.
+1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span>**L**I<span style="opacity: .2;">NG</span> $\rightarrow$ *L* > *I*. We won't highlight the *L*.
+1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span><span style="opacity: .2;">L</span>**I**N<span style="opacity: .2;">G</span> $\rightarrow$ *I* < *N*. The *I* must be highlighted.
+1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span><span style="opacity: .2;">L</span><span style="background-color:var(--mark-text); opacity: .2;">I</span>**N**G $\rightarrow$ *N* > *G*. You better not touch the *N*. Don't highlight it!
+1. <span style="opacity: .2;">F</span><span style="background-color:var(--mark-text); opacity: .2;">EEE</span><span style="opacity: .2;">L</span><span style="background-color:var(--mark-text); opacity: .2;">I</span><span style="opacity: .2;">N</span>**G** $\rightarrow$ *G* > *_*. Last letter must never be highlighted. >:(
 
 Therefore, the solution is F<span style="background-color:var(--mark-text)">EEE</span>L<span style="background-color:var(--mark-text); ">I</span>NG. Is this the right solution? Lets use the brute force way! This means: listing all highlighting possibilities and sorting them. We obtain:
 
-| 1. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">I</span>NG -> FEEEEEELIING | 5. F<span style="background-color:var(--mark-text);">EEE</span>LING -> FEEEEEELING | ... | 253. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>ING -> FFEEELLING |
-| 2. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">I</span>N<span style="background-color:var(--mark-text);">G</span> -> FEEEEEELIINGG | 6. F<span style="background-color:var(--mark-text);">EEE</span>LIN<span style="background-color:var(--mark-text);">G</span> -> FEEEEEELINGG | ... | 254. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>IN<span style="background-color:var(--mark-text);">G</span> -> FFEEELLINGG |
-| 3. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">IN</span>G -> FEEEEEELIINNG | 7. F<span style="background-color:var(--mark-text);">EEE</span>LI<span style="background-color:var(--mark-text);">N</span>G -> FEEEEEELINNG | ... | 255. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>I<span style="background-color:var(--mark-text);">N</span>G -> FFEEELLINNG |
-| 4. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">ING</span> -> FEEEEEELIINNGG | 8. F<span style="background-color:var(--mark-text);">EEE</span>LI<span style="background-color:var(--mark-text);">NG</span> -> FEEEEEELINNGG | ... | 256. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>I<span style="background-color:var(--mark-text);">NG</span> -> FFEEELLINNGG |
+| 1. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">I</span>NG $\rightarrow$ FEEEEEELIING | 5. F<span style="background-color:var(--mark-text);">EEE</span>LING $\rightarrow$ FEEEEEELING | ... | 253. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>ING $\rightarrow$ FFEEELLING |
+| 2. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">I</span>N<span style="background-color:var(--mark-text);">G</span> $\rightarrow$ FEEEEEELIINGG | 6. F<span style="background-color:var(--mark-text);">EEE</span>LIN<span style="background-color:var(--mark-text);">G</span> $\rightarrow$ FEEEEEELINGG | ... | 254. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>IN<span style="background-color:var(--mark-text);">G</span> $\rightarrow$ FFEEELLINGG |
+| 3. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">IN</span>G $\rightarrow$ FEEEEEELIINNG | 7. F<span style="background-color:var(--mark-text);">EEE</span>LI<span style="background-color:var(--mark-text);">N</span>G $\rightarrow$ FEEEEEELINNG | ... | 255. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>I<span style="background-color:var(--mark-text);">N</span>G $\rightarrow$ FFEEELLINNG |
+| 4. F<span style="background-color:var(--mark-text);">EEE</span>L<span style="background-color:var(--mark-text);">ING</span> $\rightarrow$ FEEEEEELIINNGG | 8. F<span style="background-color:var(--mark-text);">EEE</span>LI<span style="background-color:var(--mark-text);">NG</span> $\rightarrow$ FEEEEEELINNGG | ... | 256. <span style="background-color:var(--mark-text);">F</span>EEE<span style="background-color:var(--mark-text);">L</span>I<span style="background-color:var(--mark-text);">NG</span> $\rightarrow$ FFEEELLINNGG |
 
 <div style="text-align: right; font-style: italic;">Source: Trust me, bro.</div>
 
@@ -124,37 +131,37 @@ In the procedure we walk through each character of the string. For each one we d
 
 <div style="text-align: center; font-weight: bold;">R<span style="opacity: .3;">IDE</span></div>
 
-| Highlighting? | After doubling | Sorting alphabetically | Which one won? |
+| Highlighting? | After doubling | Comparing | Which one won? |
 |:-|:-|:-|:-|
-| Highlighted | <span style="background-color:var(--mark-text);">R</span>IDE -> RRIDE | <span style="opacity: .3;">R</span> **R** IDE | Comes second. |
-| Not highlighted | RIDE -> RIDE | <span style="opacity: .3;">R</span> **I** DE | Comes **FIRST**! |
+| Highlighted | <span style="background-color:var(--mark-text);">R</span>IDE $\rightarrow$ RRIDE | <span style="opacity: .3;">R</span> **R** IDE | Comes second. |
+| Not highlighted | RIDE $\rightarrow$ RIDE | <span style="opacity: .3;">R</span> **I** DE | Comes **FIRST**! |
 
 Because *R* comes after *I*, *RRIDE* comes after *RIDE*. We better **NOT** highlight the *R*.
 
 <div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">R</span>I<span style="opacity: .3;">DE</span></div>
 
-| Highlighting? | After doubling | Sorting alphabetically | Which one won? |
+| Highlighting? | After doubling | Comparing | Which one won? |
 |:-|:-|:-|:-|
-| Highlighted | R<span style="background-color:var(--mark-text);">I</span>DE -> RIIDE | <span style="opacity: .3;">RI</span> **I** DE | Comes second. |
-| Not highlighted | RIDE -> RIDE | <span style="opacity: .3;">RI</span> **D** E | Comes **FIRST**! |
+| Highlighted | R<span style="background-color:var(--mark-text);">I</span>DE $\rightarrow$ RIIDE | <span style="opacity: .3;">RI</span> **I** DE | Comes second. |
+| Not highlighted | RIDE $\rightarrow$ RIDE | <span style="opacity: .3;">RI</span> **D** E | Comes **FIRST**! |
 
 Because *I* comes after *D*, *RIIDE* comes after *RIDE*. We better **NOT** highlight the *I*.
 
 <div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">RI</span>D<span style="opacity: .3;">E</span></div>
 
-| Highlighting? | After doubling | Sorting alphabetically | Which one won? |
+| Highlighting? | After doubling | Comparing | Which one won? |
 |:-|:-|:-|:-|
-| Highlighted | RI<span style="background-color:var(--mark-text);">D</span>E -> RIDDE | <span style="opacity: .3;">RID</span> **D** E | Comes **FIRST**! |
-| Not highlighted | RIDE -> RIDE | <span style="opacity: .3;">RID</span> **E** | Comes second. |
+| Highlighted | RI<span style="background-color:var(--mark-text);">D</span>E $\rightarrow$ RIDDE | <span style="opacity: .3;">RID</span> **D** E | Comes **FIRST**! |
+| Not highlighted | RIDE $\rightarrow$ RIDE | <span style="opacity: .3;">RID</span> **E** | Comes second. |
 
 Because *D* comes before *E*, *RIDDE* comes before *RIDE*. We **MUST** highlight the *D*.
 
 <div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">RID</span>E</div>
 
-| Highlighting? | After doubling | Sorting alphabetically | Which one won? |
+| Highlighting? | After doubling | Comparing | Which one won? |
 |:-|:-|:-|:-|
-| Highlighted | RID<span style="background-color:var(--mark-text);">E</span> -> RIDEE | <span style="opacity: .3;">RIDE</span> **E** | Comes second. |
-| Not highlighted | RIDE -> RIDE | <span style="opacity: .3;">RIDE</span> | Comes **FIRST**! |
+| Highlighted | RID<span style="background-color:var(--mark-text);">E</span> $\rightarrow$ RIDEE | <span style="opacity: .3;">RIDE</span> **E** | Comes second. |
+| Not highlighted | RIDE $\rightarrow$ RIDE | <span style="opacity: .3;">RIDE</span> | Comes **FIRST**! |
 
 Because *RIDE* is a subset of *RIDEE*, *RIDEE* comes after *RIDE*. We better **NOT** highlight the *E*.
 
@@ -196,4 +203,18 @@ def first_alphabetically(my_str: str) -> str:
 
 ## Alternative Solutions
 
-> WHAT ELSE DID YOU CONSIDER WHEN COMING UP WITH THE SOLUTION ABOVE? PROS AND CONS?
+Only one alternative solution came to my mind: **brute force**. As explained at
+the beginning of the [solution section](#solution), it consists on:
+1. Generating all possible highlightings.
+1. Sorting the results.
+1. Retrieving the first one that appeared.
+
+Although the biggest pro in this solution is its simplicity, the biggest con is
+what makes this solution inviable. Each letter can be highlighted or not,
+independently of the other letters. Considering a string of $n$ characters, we
+have a total number of $2^n$ possible highlightings. On a set of small strings,
+this wont be much of a trouble. The problem begins when we have strings of at
+most 100 characters (as seen in the *Test Set 2* on Google Code Jam). That is $$
+2^{100} = 1\,267\,650\,600\,228\,229\,401\,496\,703\,205\,376 $$ possible
+highlightings. AND THAT IS AN AWFUL LOT. We don't have that much memory nor
+time! So this solution had to be discarted.
