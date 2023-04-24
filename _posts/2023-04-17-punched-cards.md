@@ -5,7 +5,7 @@ tags: [typescript]
 math: true
 
 image:
-    path: /assets/posts_images/2023-04-17/Used_Punchcard_(5151286161).jpg
+    path: https://upload.wikimedia.org/wikipedia/commons/f/fe/Used_Punchcard_%285151286161%29.jpg
     alt: "A 12-row/80-column IBM punched card from the mid-twentieth century.
     By Pete Birkinshaw from Manchester, UK - Used Punchcard, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=49758093"
 ---
@@ -188,4 +188,5 @@ There's really no alternative solutions that we could think of.
 
 ## Footnotes
 
-[^1]: See [Code Jam FAQ](https://codingcompetitions.withgoogle.com/codejam/faq) on section **Platform**.
+[^1]: See [Code Jam FAQ](https://codingcompetitions.withgoogle.com/codejam/faq)
+    on section **Platform**.
