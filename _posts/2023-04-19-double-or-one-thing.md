@@ -1,13 +1,9 @@
 ---
 title: Double or One Thing
+date: 2023-04-19 17:08:42 -0600
 categories: [Technical Logs, Individual]
 tags: [python]
 math: true
----
-
-> This page is still in WIP. A lot of information is missing or not reviewed.
-{: .prompt-danger }
-
 ---
 
 Try this problem by yourself first! Check the [Code Jam Page](https://codingcompetitions.withgoogle.com/codejam/round/0000000000877ba5/0000000000aa8e9c).
@@ -18,9 +14,33 @@ We have a string of uppercase English characters. We can double or not every
 character of the string. If we had the set of all possible results and sort them
 alphabetically, which string would come first?
 
-Our only control over the string is doubling or not every character. Sorting
+Our only control over the string is doubling or not each character. Sorting
 alphabetically means comparing letters and choosing the one that appears before
-in the alphabet. We would...
+in the alphabet. If we had the string *AB*, we would highlight the *A* because
+*AAB* comes before *AB*. Why does *AAB* comes before *AB*? Because we compare
+the second *A* of *AAB* with the *B* of *AB*. *A* comes before *B* in the
+alphabet, therefore *AAB* comes before *AB*.
+
+Let's see another simple example. If our string is *BA*, then we won't
+highlight the first *B*, because *BBA* would come after *BA*. From another
+point of view, we're comparing each letter with the immediate next letter. In
+the case of *BA*, we're comparing the *B* with the *A*. Because the *B* comes
+after the *A*, we won't highlight the *B*.
+
+What if we're seeing the last letter? In the case *ABC*, do we highlight the
+*C*? No, we won't highlight it, because *ABC* comes before *ABCC*. In this
+sense, we'll never highlight the last letter.
+
+Finally, what if we're comparing the same letter? Let's say we want to know if
+we have to highlight the first *O* in *LOOK*. Instead of comparing the first
+*O* with the second *O* (that doesn't give us any information), we will
+compare it with the first distinct letter. In this case, that letter is *K*.
+Now we can have the same conclusions as before, but applied to all repeating
+letters. I.e., *O* comes after *K*? Then don't highlight any *O*. What about
+*FEEL*? Instead of comparing the first *E* with the second *E*, compare it with
+*L*. *E* comes before *L*? Then highlight ALL *E*'s.
+
+That's a very condensed overview of the solution and why it works.
 
 <br>
 <div style="text-align: center;">O &nbsp; &nbsp; O &nbsp; &nbsp; O</div>
@@ -195,6 +215,116 @@ def first_alphabetically(my_str: str) -> str:
 
 #### With repeating letters
 
+What happens when you have to compare between the same letter? Let's look at some examples:
+
+<div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">L</span>O<span style="opacity: .3;">OK</span></div>
+
+| Highlighting? | After doubling | Comparing | Which one won? |
+|:-|:-|:-|:-|
+| Highlighted | L<span style="background-color:var(--mark-text);">O</span>OK $\rightarrow$ LOOOK | <span style="opacity: .3;">LOO</span> **O** K | Comes second. |
+| Not highlighted | LOOK $\rightarrow$ LOOK | <span style="opacity: .3;">LOO</span> **K** | Comes **FIRST**! |
+
+Then we might not highlight it. But... what if...
+
+<div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">F</span>E<span style="opacity: .3;">EL</span></div>
+
+| Highlighting? | After doubling | Comparing | Which one won? |
+|:-|:-|:-|:-|
+| Highlighted | F<span style="background-color:var(--mark-text);">E</span>EL $\rightarrow$ FEEEL | <span style="opacity: .3;">FEE</span> **E** L | Comes **FIRST**! |
+| Not highlighted | FEEL $\rightarrow$ FEEL | <span style="opacity: .3;">FEE</span> **L** | Comes second. |
+
+Now we have to highlight it. Oh no. Wait...
+
+<div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">S</span>E<span style="opacity: .3;">E</span></div>
+
+| Highlighting? | After doubling | Comparing | Which one won? |
+|:-|:-|:-|:-|
+| Highlighted | S<span style="background-color:var(--mark-text);">E</span>E $\rightarrow$ SEEE | <span style="opacity: .3;">SEE</span> **E** | Comes second. |
+| Not highlighted | SEE $\rightarrow$ SEE | <span style="opacity: .3;">SEE</span> | Comes **FIRST**! |
+
+NOW WE DON'T. WHAT IS HAPPENING???
+
+> Here, have some water.
+>
+> Have a deep breath.
+>
+> Now, what just happen?
+
+Watch closely. We are highlighting the first letter that repeats, but we're not comparing the second letter that repeats. In fact, we're comparing it with the first distinct letter (or the last letter if there's no more distinct letters). To make this much more clear, let's exaggerate the repeating letters.
+
+<div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">L</span>O<span style="opacity: .3;">OOOOOK</span></div>
+
+| Highlighting? | After doubling | Comparing | Which one won? |
+|:-|:-|:-|:-|
+| Highlighted | L<span style="background-color:var(--mark-text);">O</span>OOOOOK $\rightarrow$ LOOOOOOOK | <span style="opacity: .3;">LOOOOOO</span> **O** K | Comes second. |
+| Not highlighted | LOOOOOOK $\rightarrow$ LOOOOOOK | <span style="opacity: .3;">LOOOOOO</span> **K** | Comes **FIRST**! |
+
+We won't highlight any *O*'s, since *K* comes before *O* in the alphabet.
+
+<div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">F</span>E<span style="opacity: .3;">EEEEEL</span></div>
+
+| Highlighting? | After doubling | Comparing | Which one won? |
+|:-|:-|:-|:-|
+| Highlighted | F<span style="background-color:var(--mark-text);">E</span>EEEEEL $\rightarrow$ FEEEEEEEL | <span style="opacity: .3;">FEEEEEE</span> **E** L | Comes **FIRST**! |
+| Not highlighted | FEEEEEEL $\rightarrow$ FEEEEEEL | <span style="opacity: .3;">FEEEEEE</span> **L** | Comes second. |
+
+We will highlight not only the first *E*, but all *E*'s. We want that *L* to appear as late as possible, because *E* comes before *L*.
+
+<div style="text-align: center; font-weight: bold;"><span style="opacity: .3;">S</span>E<span style="opacity: .3;">EEEEE</span></div>
+
+| Highlighting? | After doubling | Comparing | Which one won? |
+|:-|:-|:-|:-|
+| Highlighted | S<span style="background-color:var(--mark-text);">E</span>EEEEE $\rightarrow$ SEEEEEEE | <span style="opacity: .3;">SEEEEEE</span> **E** | Comes second. |
+| Not highlighted | SEEEEEE $\rightarrow$ SEEEEEE | <span style="opacity: .3;">SEEEEEE</span> | Comes **FIRST**! |
+
+The least letters we have at the end, the better.
+
+Is it now clear why if we have repeating letters, we compare the first repeating letter with the first distinct letter? We can code this in the following way:
+
+```python
+def give_me_last_equal(string: str, position: int) -> int:
+    """
+    Given a position in a string, output the last position such as:
+    string[position] == string[position + 1] == ... == string[last_position].
+    """
+    test_letter = string[position]
+
+    last_position = position
+    while last_position < len(string) - 1 and test_letter == string[last_position + 1]:
+        last_position += 1
+
+    return last_position
+
+
+def first_alphabetically(my_str: str) -> str:
+    while current < len(my_str) - 1:
+        # Already seen code.
+
+        else:
+            # Search for the index of the first letter distinct from the
+            # current letter.
+            last_equal = give_me_last_equal(my_str, current)
+
+            # If the string ends with repeating letters, don't highlight them.
+            if last_equal == len(my_str) - 1:
+                result += my_str[current] * (last_equal - current)
+                break
+            # If the current letters comes before, highlight all of them.
+            elif my_str[last_equal] < my_str[last_equal + 1]:
+                result += my_str[current] * (2 * (last_equal - current + 1))
+            # If the current letters comes after, don't highlight them.
+            else:
+                result += my_str[current] * (last_equal - current + 1)
+
+            # Walk `last_equal - current + 1` letters forward.
+            current += last_equal - current + 1
+
+    # Already seen code.
+```
+{: file="solution.py"}
+
+And now you know why the proposed solution works that way. Congratulations! :D
+
 <br>
 <div style="text-align: center;">O &nbsp; &nbsp; O &nbsp; &nbsp; O</div>
 <div style="text-align: center;">o o o</div>
@@ -213,7 +343,7 @@ Although the biggest pro in this solution is its simplicity, the biggest con is
 what makes this solution inviable. Each letter can be highlighted or not,
 independently of the other letters. Considering a string of $n$ characters, we
 have a total number of $2^n$ possible highlightings. On a set of small strings,
-this wont be much of a trouble. The problem begins when we have strings of at
+this won't be much of a trouble. The problem begins when we have strings of at
 most 100 characters (as seen in the *Test Set 2* on Google Code Jam). That is $$
 2^{100} = 1\,267\,650\,600\,228\,229\,401\,496\,703\,205\,376 $$ possible
 highlightings. AND THAT IS AN AWFUL LOT. We don't have that much memory nor
