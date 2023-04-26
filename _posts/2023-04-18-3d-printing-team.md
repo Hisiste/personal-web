@@ -100,25 +100,25 @@ Even if the algorithm implemented for all languages is basically the same, every
 
 1. Initialize a variable for the test case counter. 
 
-    Dart, Kotlin, Python 1, and Python 2 initialize the counter implicitly by using a loop with a range. TypeScript explicitly initializes a count variable. 
+    Dart, Kotlin, Python 1, and Python 2 initialize the counter implicitly by using a loop with a range. TypeScript explicitly initializes a `count` variable. 
 
 1. Read the ink levels for each of the three printers. 
 
-    Dart, Kotlin, and Python 1 handle reading input in the main loop, whereas Python 2 and TypeScript use separate input handling. Python 2 uses a function (find_color) that takes the number of test cases and printer data as arguments, while TypeScript reads printer data as strings and then converts them into arrays of numbers. 
+    Dart, Kotlin, and Python 1 handle reading input in the main loop, whereas Python 2 and TypeScript use separate input handling. Python 2 uses a function (`find_color`) that takes the number of test cases and printer data as arguments, while TypeScript reads printer data as strings and then converts them into arrays of numbers. 
 
 1. Find the minimum ink level for each color (CMYK) across the three printers. 
 
-    Dart, Kotlin, and TypeScript use a similar approach, calculating minimum ink levels for each color directly using a conditional or Math.min() function. 
+    Dart, Kotlin, and TypeScript use a similar approach, calculating minimum ink levels for each color directly using a conditional or `Math.min()` function. 
 
-    Python 1 uses NumPy's amin() function to find the minimum ink level for each color, while Python 2 uses nested loops in the find_color() function to find the minimum ink levels. 
+    Python 1 uses NumPy's `amin()` function to find the minimum ink level for each color, while Python 2 uses nested loops in the `find_color()` function to find the minimum ink levels. 
 
 1. Calculate the total ink level by summing the minimum ink levels for each color. 
 
-    Dart, Kotlin, and Python 2 sum the ink levels directly within the main loop, while Python 1 uses NumPy's sum() function. TypeScript uses the reduce() function to calculate the total ink level. 
+    Dart, Kotlin, and Python 2 sum the ink levels directly within the main loop, while Python 1 uses NumPy's `sum()` function. TypeScript uses the `reduce()` function to calculate the total ink level. 
 
-1. Check if the total ink level is 10^6 and adjust the ink levels as needed. 
+1. Check if the total ink level is $10^6$ and adjust the ink levels as needed. 
 
-    All implementations follow a similar approach, using conditional statements to check the total ink level and adjusting ink levels as needed. Python 2, however, separates this logic into the find_color() function. 
+    All implementations follow a similar approach, using conditional statements to check the total ink level and adjusting ink levels as needed. Python 2, however, separates this logic into the `find_color()` function. 
 
 1. Print the adjusted ink levels for each color (CMYK). 
 
