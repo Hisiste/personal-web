@@ -6,6 +6,10 @@ math: true
 date: 2023-04-24 21:52:01 -0600
 
 author: adriz
+
+image:
+    path: /assets/posts_assets/2023-04-21-twisty-little-passages-team/Little-Old-Map.jpg
+    alt: An old map of a dungeon. Image created with Stable Diffusion 2.1.
 ---
 
 Try this problem by yourself first! Check the [Code Jam Page](https://codingcompetitions.withgoogle.com/codejam/round/0000000000876ff1/0000000000a45fc0#analysis).
